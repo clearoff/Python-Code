@@ -1,0 +1,185 @@
+#-*- coding:utf-8 -*-
+
+#print 'abc'+'xyz'
+
+
+#任何一个有 __call__方法的对象都被当做是函数
+
+
+#定义仿函数
+#class Add(object):
+ #   def __call__(self,a,b=1):
+ #       return a+b
+
+#add=Add()
+
+#print(add(3,5))
+
+#print map(add,[1,2,3,4])
+
+'''
+
+import os
+f=file("new.txt","w")
+print(f.close())
+
+f.write("hello world")
+f.close()
+print f.close
+'''
+
+#上下文管理器在隶属的程序块结束后会自动关闭文件
+
+'''
+with open("new.txt","w") as f:
+    print dir(f)
+    f.write("Hello World")
+print(f.close)
+'''
+
+'''
+class File(object):
+    def __init__(self,text):
+        self.text=text
+        self.fwrite=file(self.text,"w")
+        self.fwrite.close()
+    def __enter__(self):
+        self.fwrite=open(self.text,"w")
+        return self.fwrite
+
+    def __exit__(self,exc_type,exc_value,traceback):
+        self.fwrite.close()
+
+with File("hello.txt") as myfile:
+    print myfile.closed
+    myfile.write("hello world!!!")
+print myfile.closed
+'''
+
+'''
+
+class bird(object):
+    fly=True
+
+class chicken(bird):
+    fly=False
+    def __init__(self,age):
+        self.age=age
+
+    def getAdult(self):
+        if self.age > 1:return True
+        else: return False
+    adult=property(getAdult)
+
+summer=chicken(2)
+print(summer.adult)
+summer.age=0.5
+print(summer.adult)
+'''
+#summer=chicken(2)
+#print bird.__dict__
+#print chicken.__dict__
+#print summer.__dict__
+#summer=chicken(2)
+#print summer.__class__.__bases__
+
+
+
+'''
+def line_conf():
+    b=15
+    def line(x):
+        return 2*x+15
+    print line.__closure__
+    return line   #可以返回一个函数对象
+
+#print line_conf()(5)
+
+my_line=line_conf()
+print(my_line.__closure__)
+
+#print my_line.__closure__[0]
+'''
+
+
+'''
+def pre(str):
+    def decorator(F):
+        def new_F(a,b):
+            print str,a,b
+            return F(a,b)
+        return new_F
+    return decorator
+
+@pre("Hello World")
+def square_sum(a,b):
+    return a**2 + b**2
+
+@pre("Hello World")
+def square_diff(a,b):
+    return a**2 - b**2
+
+print square_sum(3,4)
+print square_diff(3,4)
+'''
+
+'''
+def decorator(aClass):
+    class NewClass:
+        def __init__(self,age):
+            self.total_display=0
+            self.wrapped = aClass(age)    #让wrapped指向aClass对象
+
+        def display(self):
+            self.total_display+=1
+            print "total display",self.total_display
+            self.wrapped.display()
+
+    return NewClass
+
+@decorator
+class Bird:
+    def __init__(self,age):
+        self.age=age
+    def display(self):
+        print "My agee is",self.age
+
+l1=Bird(5)
+
+for i in range(3):
+    l1.display()
+'''
+
+#a=1
+#b=1
+
+#a="hehe"
+#b="hehe"
+#print (a is b)
+#print(id(b))
+#print(id(a))
+#print(hex(id(a)))
+
+'''
+x=[1,2,3]
+y=[x,dict(key1=x)]
+z=[y,(x,y)]
+
+import  objgraph
+objgraph.show_refs([z],filename='ref.png')
+
+print objgraph
+'''
+#a=[]
+#b=[a]
+#a.append(b)
+
+
+#import sys
+
+#print sys.getrefcount(a)
+
+
+
+
+
